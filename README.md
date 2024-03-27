@@ -1,1 +1,1 @@
-# Food Recommendation App
+# Waste Classification App
