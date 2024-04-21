@@ -1,0 +1,18 @@
+Each example in the RealWaste dataset is a 524 x 524 grayscale image.
+
+1. Input is 524 x 524
+2. We do a 5 x 5 convolution without padding(since default padding=0) and stride=1(by default), so we lose 2 pixels at each side, we drop down to 520 x 520, i.e.,(524-5)/1 + 1
+3. We then perform maxpooling operation with receptive field of 2 x 2, we cut each dimension by half, down to 260 x 260
+4. We again do another 5 x 5 convolution without padding and stride=1, we drop down to 256 x 256, i.e.,(260-5)/1 + 1
+5. Then, we perform another maxpooling operation, we drop down to 128 x 128
+6. We again do another 5 x 5 convolution without padding and stride=1, we drop down to 124 x 124, i.e.,(128-5)/1 + 1
+7. Then, we perform another maxpooling operation, we drop down to 62 x 62
+8. We again do another 5 x 5 convolution without padding and stride=1, we drop down to 58 x 58, i.e.,(128-5)/1 + 1
+9. Then, we perform another maxpooling operation, we drop down to 29 x 29
+10. We again do another 5 x 5 convolution without padding and stride=1, we drop down to 58 x 58, i.e.,(128-5)/1 + 1
+11. Then, we perform another maxpooling operation, we drop down to 29 x 29
+That's why, self.fc1 = nn.Linear(in_features=12*4*4, out_features=120). It's basically, n_features_conv * height * width, where height and width are 4 respectively and n_features_conv is same as out_channels of the conv2D layer lying just above it.
+
+Note if you change the size of input image, then you will have to perform the above calculations and adjust the first Linear layer accordingly.
+
+Hope this helps you!
